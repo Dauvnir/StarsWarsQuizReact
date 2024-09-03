@@ -3,7 +3,7 @@ import styled from "styled-components";
 import StarWarsLogo from "../../public/ui/StarWarsLogo.png";
 import { useState } from "react";
 const Wrap = styled.div`
-	height: 25vh;
+	height: 30vh;
 	margin: 1rem;
 	display: flex;
 	align-items: center;
@@ -54,6 +54,7 @@ const Button = styled.button`
 		color: black;
 		font-size: 1.4rem;
 		font-weight: 500;
+		font-family: Montserrat;
 		border-bottom: ${({ $active }) => ($active ? "6px solid red" : "none")};
 		position: relative;
 		${({ $active }) =>

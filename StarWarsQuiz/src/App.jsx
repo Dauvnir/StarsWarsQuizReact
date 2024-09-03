@@ -59,7 +59,7 @@ const WrapImage = styled.div`
 	align-items: center;
 	padding-inline: 1rem;
 	gap: 1rem;
-	@media (max-width: 650px) {
+	@media (max-width: 649px) {
 		display: none;
 	}
 	@media (max-width: 1000px) {
@@ -136,7 +136,7 @@ const App = () => {
 							handlerGameOver={handlerGameOver}
 						/>
 					) : (
-						<DescriptionModeRules $showRanking={ranking} />
+						<DescriptionModeRules $showRanking={ranking} mode={mode} />
 					)}
 				</WrapRules>
 			</Wrap>

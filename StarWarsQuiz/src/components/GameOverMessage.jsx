@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import yoda from "../../public/ui/MasterYodaLeft.png";
-import jajar from "../../public/ui/jajar.jpg";
 
 const Wrap = styled.div`
 	min-height: 30rem;
@@ -18,6 +17,7 @@ const Wrap = styled.div`
 	border-radius: 10px;
 	box-shadow: 4px 4px 40px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
 	color: black;
+	gap: 1rem;
 `;
 
 const Title = styled.h2`
@@ -26,8 +26,9 @@ const Title = styled.h2`
 	margin: 0;
 	text-align: center;
 	padding-block: 0.25rem;
+	font-size: 1.75rem;
 	@media (min-width: 800px) {
-		font-size: 2rem;
+		font-size: 2.5rem;
 	}
 `;
 
@@ -35,20 +36,12 @@ const Message = styled.p`
 	margin: 0;
 	padding-inline: 0.5rem;
 	height: auto;
+	font-size: 1.2rem;
 	@media (min-width: 800px) {
-		font-size: 1.3rem;
+		font-size: 1.4rem;
 	}
 `;
 
-const ScoreTableYoda = styled.div`
-	width: 100%;
-	height: 15rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
-	margin-top: 1rem;
-`;
 const ImageWrapper = styled.div`
 	height: 100%;
 	width: 35%;
@@ -60,55 +53,6 @@ const Image = styled.img`
 	object-fit: contain;
 `;
 
-const ScoreTable = styled.div`
-	width: 100%;
-	height: 100%;
-	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-auto-rows: auto;
-	grid-template-areas: "none title1 title2 title3";
-	grid-row-gap: 1rem;
-	grid-column-gap: 0.25rem;
-	overflow: scroll;
-	margin-inline: 0.5rem;
-`;
-
-const TableHeader = styled.h3`
-	margin: 0;
-	text-align: center;
-`;
-const Header1 = styled(TableHeader)`
-	grid-area: title1;
-`;
-const Header2 = styled(TableHeader)`
-	grid-area: title2;
-`;
-const Header3 = styled(TableHeader)`
-	grid-area: title3;
-`;
-
-const Answer = styled.div`
-	display: contents;
-	text-align: center;
-`;
-
-const ImageWrapper2 = styled.div`
-	width: 80%;
-	height: auto;
-	display: flex;
-	margin: auto;
-`;
-
-const Image2 = styled(Image)`
-	width: 100%;
-	height: 100%;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px 2px #ff0000e5, 0px 4px 4px 0px #00000040;
-`;
-
-const Span = styled.span`
-	margin: auto;
-`;
 const Wrapper = styled.div`
 	width: 100%;
 	height: 10rem;
@@ -139,7 +83,7 @@ const Input = styled.input`
 	background-color: white;
 	height: 3rem;
 	width: calc(100% - 2rem);
-	margin: 0 auto 1rem 0.5rem;
+	margin: -2.15rem auto 1rem 0.5rem;
 	border: 2px solid grey;
 	padding-inline: 0.5rem;
 	font-size: 1.5rem;
@@ -151,9 +95,9 @@ const Input = styled.input`
 const Submit = styled.button`
 	border-radius: 10px;
 	background-color: red;
-	height: 3rem;
+	height: 4.25rem;
 	width: 80%;
-	padding-inline: 0.5rem;
+	padding: 0.5rem;
 	font-size: 1.25rem;
 	font-weight: 600;
 	color: white;
@@ -161,11 +105,13 @@ const Submit = styled.button`
 	text-align: center;
 	cursor: pointer;
 	border: none;
+	@media (min-width: 800px) {
+		font-size: 1.5rem;
+	}
 `;
 // eslint-disable-next-line react/prop-types
 const GameOverMessage = ({ points, mode }) => {
 	const handlerSubmit = (e) => {
-		e.preventDefault();
 		const form = e.target;
 		const nickname = form.elements.Nickname.value;
 		let newKey = `Player_${nickname}_${mode}`;
@@ -182,35 +128,14 @@ const GameOverMessage = ({ points, mode }) => {
 			<Title>Game Over</Title>
 			<Message>
 				The force is strong in you young Padawan! During 1 minute you have
-				answered {points} / 20 questions. And Computer quessed 5 / 23.
+				answered {points} / 20 questions.
 			</Message>
-			<ScoreTableYoda>
-				<ScoreTable>
-					<span></span>
-					<Header1>You</Header1>
-					<Header2>Computer</Header2>
-					<Header3>Answer</Header3>
-					<Answer>
-						<ImageWrapper2>
-							<Image2 src={jajar} alt="jajar" />
-						</ImageWrapper2>
-						<Span>Darth Vader</Span>
-						<Span>Darth Father</Span>
-						<Span>Darth Vader</Span>
-					</Answer>
-					<Answer>
-						<ImageWrapper2>
-							<Image2 src={jajar} alt="jajar" />
-						</ImageWrapper2>
-						<Span>Darth Vader</Span>
-						<Span>Darth Father</Span>
-						<Span>Darth Vader</Span>
-					</Answer>
-				</ScoreTable>
-			</ScoreTableYoda>
 			<Wrapper>
 				<ImageWrapper>
-					<Image src={yoda} alt="yoda" />
+					<Image
+						src={yoda}
+						alt="yoda"
+					/>
 				</ImageWrapper>
 				<Message2>
 					Please fill your name in order to receive eternal glory in whole
@@ -218,7 +143,12 @@ const GameOverMessage = ({ points, mode }) => {
 				</Message2>
 			</Wrapper>
 			<Form onSubmit={handlerSubmit}>
-				<Input type="text" name="Nickname" placeholder="Your name" required />
+				<Input
+					type="text"
+					name="Nickname"
+					placeholder="Your name"
+					required
+				/>
 				<Submit type="submit">MAY THE FORCE BE WITH YOU!</Submit>
 			</Form>
 		</Wrap>

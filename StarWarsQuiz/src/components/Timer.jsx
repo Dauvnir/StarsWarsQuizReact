@@ -46,9 +46,10 @@ const SaberFill = styled.div`
 	border-radius: 25px;
 	box-shadow: 10px 5px 15px 0px #ff0000, 0px 5px 4px 0px #ff000040 inset,
 		10px -5px 15px 0px #ff0000;
-	animation: ${saberAnimation} 62s linear;
+	transition: width 0.1s linear;
+	/* animation: ${saberAnimation} 60s linear;
 	animation-play-state: ${({ $gameoverState }) =>
-		$gameoverState ? "paused" : "running"};
+		$gameoverState ? "paused" : "running"}; */
 `;
 const Img = styled.img`
 	width: 100%;
@@ -65,18 +66,29 @@ const Countdown = styled.p`
 // eslint-disable-next-line react/prop-types
 const Timer = ({ gameover, gameoverState }) => {
 	const [time, setTime] = useState(60); // 60 seconds
-
+	const [width, setWidth] = useState(100);
 	useEffect(() => {
 		if (time > 0 && gameoverState === false) {
-			const timerId = setTimeout(() => setTime(time - 1), 1000);
+			const timerId = setInterval(() => {
+				setTime((prevTime) => {
+					const newTime = prevTime - 0.1;
+					setWidth(newTime / 60 * 100); // Update width based on remaining time
+					return newTime;
+				});
+			}, 100);
 			return () => clearTimeout(timerId); // Cleanup the timer on component unmount
 		}
-		if (time === 0 || gameoverState === true) gameover(true);
+		if (time <= 0 || gameoverState) {
+			gameover(true);
+			setWidth(0);
+			setTime(0);
+		}
 	}, [time, gameover, gameoverState]);
 
 	const formatTime = (seconds) => {
-		const minutes = Math.floor(seconds / 60);
-		const remainingSeconds = seconds % 60;
+		const roundSeconds = Math.floor(seconds);
+		const minutes = Math.floor(roundSeconds / 60);
+		const remainingSeconds = roundSeconds % 60;
 		return `Time left: ${minutes}:${
 			remainingSeconds < 10 ? "0" : ""
 		}${remainingSeconds}`;
@@ -89,7 +101,7 @@ const Timer = ({ gameover, gameoverState }) => {
 					<Img src={SaberHandle} />
 				</Handle>
 				<Saber>
-					<SaberFill $gameoverState={gameoverState} />
+					<SaberFill $gameoverState={gameoverState} style={{ width: `${width}%` }}/>
 				</Saber>
 			</SaberWrap>
 			<Countdown>{formatTime(time)}</Countdown>
@@ -97,7 +109,7 @@ const Timer = ({ gameover, gameoverState }) => {
 	);
 };
 
-Timer.propTypesropTypes = {
+Timer.propTypes = {
 	gameover: PropTypes.func.isRequired,
 };
 export default Timer;
