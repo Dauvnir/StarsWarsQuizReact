@@ -28,7 +28,7 @@ const Wrap = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: calc(100vw - 2rem);
-	height: 55vh;
+	height: 55svh;
 	align-items: center;
 	margin-inline: 1rem;
 	@media (min-width: 1000px) {
@@ -97,15 +97,15 @@ const App = () => {
 	const handlerGameStart = (gameStart) => {
 		setGameStart(gameStart);
 	};
-	useEffect(() => {
-		console.log("---------------------------------");
-		console.log("Game mode:", mode);
-		console.log("Game start:", gameStart);
-		console.log("Game over:", gameOver);
-		console.log("Show ranking", ranking);
-		console.log("Points", points);
-		console.log("---------------------------------");
-	}, [mode, gameStart, ranking, gameOver, points]);
+	// useEffect(() => {
+	// 	console.log("---------------------------------");
+	// 	console.log("Game mode:", mode);
+	// 	console.log("Game start:", gameStart);
+	// 	console.log("Game over:", gameOver);
+	// 	console.log("Show ranking", ranking);
+	// 	console.log("Points", points);
+	// 	console.log("---------------------------------");
+	// }, [mode, gameStart, ranking, gameOver, points]);
 
 	useEffect(() => {
 		if (points === 20) {
@@ -114,11 +114,17 @@ const App = () => {
 	}, [points]);
 	return (
 		<>
-			<ButtonModes handlerMode={handlerMode} $gameStart={gameStart} />
+			<ButtonModes
+				handlerMode={handlerMode}
+				$gameStart={gameStart}
+			/>
 			<Wrap>
 				<WrapImage>
 					<Image>
-						<img src={`${image}`} alt="jajar" />
+						<img
+							src={`${image}`}
+							alt="jajar"
+						/>
 					</Image>
 				</WrapImage>
 				<WrapRules>
@@ -136,18 +142,32 @@ const App = () => {
 							handlerGameOver={handlerGameOver}
 						/>
 					) : (
-						<DescriptionModeRules $showRanking={ranking} mode={mode} />
+						<DescriptionModeRules
+							$showRanking={ranking}
+							mode={mode}
+						/>
 					)}
 				</WrapRules>
 			</Wrap>
 
 			{gameStart && !loading && (
-				<Timer gameover={handlerGameOver} gameoverState={gameOver} />
+				<Timer
+					gameover={handlerGameOver}
+					gameoverState={gameOver}
+				/>
 			)}
 			{!gameStart && (
-				<StartGame gameStart={handlerGameStart} ranking={handlerRanking} />
+				<StartGame
+					gameStart={handlerGameStart}
+					ranking={handlerRanking}
+				/>
 			)}
-			{gameOver && <GameOverMessage points={points} mode={mode} />}
+			{gameOver && (
+				<GameOverMessage
+					points={points}
+					mode={mode}
+				/>
+			)}
 		</>
 	);
 };

@@ -8,7 +8,7 @@ import { useState } from "react";
 const Wrap = styled.div`
 	margin: 1rem;
 	margin-top: 2rem;
-	height: 15vh;
+	height: 15svh;
 	gap: 1rem;
 	display: flex;
 	justify-content: center;
@@ -16,7 +16,7 @@ const Wrap = styled.div`
 	flex-direction: column;
 	@media (min-width: 650px) {
 		flex-direction: row;
-		height: 10vh;
+		height: 10svh;
 		margin: 2rem;
 	}
 `;
@@ -53,12 +53,18 @@ const StartGame = ({ gameStart, ranking }) => {
 			<Button onClick={handlerShowRanking}>
 				{showRanking ? (
 					<>
-						<img src={School} alt="contacts" />
+						<img
+							src={School}
+							alt="contacts"
+						/>
 						<span>Rules</span>
 					</>
 				) : (
 					<>
-						<img src={Contacts} alt="contacts" />
+						<img
+							src={Contacts}
+							alt="contacts"
+						/>
 						<span>Hall of fame</span>
 					</>
 				)}

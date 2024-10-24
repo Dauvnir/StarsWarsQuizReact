@@ -22,7 +22,7 @@ const SaberWrap = styled.div`
 `;
 
 const Wrap = styled.div`
-	height: 15vh;
+	height: 15svh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -72,7 +72,7 @@ const Timer = ({ gameover, gameoverState }) => {
 			const timerId = setInterval(() => {
 				setTime((prevTime) => {
 					const newTime = prevTime - 0.1;
-					setWidth(newTime / 60 * 100); // Update width based on remaining time
+					setWidth((newTime / 60) * 100); // Update width based on remaining time
 					return newTime;
 				});
 			}, 100);
@@ -101,7 +101,10 @@ const Timer = ({ gameover, gameoverState }) => {
 					<Img src={SaberHandle} />
 				</Handle>
 				<Saber>
-					<SaberFill $gameoverState={gameoverState} style={{ width: `${width}%` }}/>
+					<SaberFill
+						$gameoverState={gameoverState}
+						style={{ width: `${width}%` }}
+					/>
 				</Saber>
 			</SaberWrap>
 			<Countdown>{formatTime(time)}</Countdown>
