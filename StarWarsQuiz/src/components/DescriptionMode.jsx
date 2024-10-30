@@ -2,29 +2,31 @@
 import styled from "styled-components";
 const ModeDescription = styled.div`
 	pointer-events: ${({ $gameOver }) => ($gameOver ? "none" : "auto")};
-	height: 15%;
-	width: 100%;
-`;
 
-const Mode = styled.div`
-	height: 100%;
 	width: 100%;
-	border-radius: 10px;
+	min-height: 20%;
+
 	background-color: white;
 	box-shadow: 4px 4px 20px 0px #ff0000e5, 0px 4px 4px 0px #00000040,
 		4px 5px 4px 0px #00000080 inset;
-	text-align: center;
+	border-radius: 10px;
+
+	padding: 1rem 0 1rem 1rem;
+
+	overflow: hidden;
+
+	margin-bottom: 1rem;
+
 	display: flex;
+	justify-content: left;
+	align-items: center;
+
 	span {
-		color: black;
-		font-size: 1.4rem;
-		font-weight: 500;
-		margin: auto;
-		@media (min-width: 850px) {
-			font-size: 1.75rem;
-		}
-		@media (min-width: 1100px) {
-			font-size: 2.2rem;
+		white-space: nowrap;
+
+		font-size: clamp(1rem, 1rem + 1vw, 1.4rem);
+		@media (orientation: landscape) {
+			font-size: clamp(0.75rem, 0.75rem + 1vw, 1.4rem);
 		}
 	}
 `;
@@ -51,17 +53,13 @@ const DescriptionMode = ({ mode, $gameStart, $gameOver }) => {
 			title = titles[0];
 	}
 	return (
-		<>
-			<ModeDescription $gameOver={$gameOver}>
-				<Mode>
-					{$gameStart ? (
-						<span>Question : {title}</span>
-					) : (
-						<span>MODE: {title}</span>
-					)}
-				</Mode>
-			</ModeDescription>
-		</>
+		<ModeDescription $gameOver={$gameOver}>
+			{$gameStart ? (
+				<span>Question : {title}</span>
+			) : (
+				<span>MODE: {title}</span>
+			)}
+		</ModeDescription>
 	);
 };
 

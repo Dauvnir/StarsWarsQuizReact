@@ -4,51 +4,61 @@ import School from "../../public/ui/school_24px.png";
 import { useEffect, useState } from "react";
 
 const Description = styled.div`
-	height: 85%;
-	width: 100%;
-	padding: 0.5rem;
-	border-radius: 10px;
 	background-color: white;
+
+	border-radius: 10px;
+
+	padding: 1rem;
+
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	flex-direction: column;
+
+	flex-grow: 1;
 	#div1 {
-		text-align: center;
+		width: 100%;
+
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 15%;
-		margin-bottom: 0.5rem;
+
+		gap: 0.5rem;
+
+		white-space: nowrap;
+
+		overflow: hidden;
+
 		h1 {
-			@media (min-width: 800px) {
-				font-size: 1.75rem;
-			}
+			font-size: clamp(1.5rem, 1.5rem + 1vw, 3rem);
 		}
+
 		img {
 			margin-right: 0.5rem;
-			height: 24px;
-			width: 24px;
-			@media (min-width: 800px) {
-				height: 2rem;
-				width: 2rem;
+
+			height: 32px;
+			width: 32px;
+			@media (orientation: landscape) {
+				height: auto;
+				width: auto;
 			}
 		}
 	}
 	#div2 {
-		height: 85%;
 		width: 100%;
-		overflow: scroll;
+		height: 100%;
+
+		overflow: hidden;
+
 		span {
-			text-align: left;
-			font-size: 1.5rem;
+			font-size: clamp(1.2rem, 0.35rem + 1vw, 1.4rem);
 			font-weight: 500;
-			@media (min-width: 500px) {
-				font-size: 1.5rem;
-			}
-			@media (min-width: 800px) {
-				font-size: 1.75rem;
-			}
-			@media (min-width: 1000px) {
-				line-height: 2.5rem;
-			}
+			line-height: clamp(1.25rem, 1.25rem + 1vw, 3rem);
 		}
+
 		div {
 			height: 100%;
 			width: 100%;
@@ -134,14 +144,6 @@ const Description = styled.div`
 			}
 		}
 	}
-
-	@media (max-width: 650px) {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-	}
 `;
 
 // eslint-disable-next-line react/prop-types
@@ -154,7 +156,11 @@ const DescriptionModeRules = ({ $showRanking, mode }) => {
 			for (let i = 0; i < localStorage.length; i++) {
 				let key = localStorage.key(i);
 				let value = localStorage.getItem(key);
-				allData[key] = JSON.parse(value);
+				try {
+					allData[key] = JSON.parse(value);
+				} catch (error) {
+					continue;
+				}
 			}
 			setData(allData);
 		};
@@ -173,12 +179,11 @@ const DescriptionModeRules = ({ $showRanking, mode }) => {
 	}, []);
 
 	useEffect(() => {
-		console.log("Original data:", data);
+		// console.log("Original data:", data);
 
 		const arrayOfObjects = Object.entries(data).map(([key, value]) => {
 			return { id: key, ...value };
 		});
-		console.log("Converted to array", arrayOfObjects);
 
 		const sortedArrayByNameAndValue = arrayOfObjects.sort((a, b) => {
 			if (a.points === b.points) {
@@ -189,8 +194,8 @@ const DescriptionModeRules = ({ $showRanking, mode }) => {
 		const limitedArray = sortedArrayByNameAndValue
 			.filter((obj) => obj.mode === mode)
 			.slice(0, 4);
-		console.log("Sorted by mode", sortedArrayByNameAndValue);
-		console.log("Sorted by actual mode and limited to 4", limitedArray);
+		// console.log("Sorted by mode", sortedArrayByNameAndValue);
+		// console.log("Sorted by actual mode and limited to 4", limitedArray);
 		setFilteredData(limitedArray);
 	}, [data, mode]);
 	return (

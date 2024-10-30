@@ -8,62 +8,61 @@ import DescriptionModeRules from "./components/DescriptionModeRules";
 import GameOverMessage from "./components/GameOverMessage";
 import styled from "styled-components";
 import jajar from "../public/ui/jajar.jpg";
-
-const Image = styled.div`
-	display: none;
-	height: 100%;
-	img {
-		height: 100%;
-		width: 100%;
-		object-fit: cover;
-		box-shadow: 4px 4px 40px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
-		border-radius: 10px;
-	}
-	@media (min-width: 650px) {
-		display: block;
-	}
-`;
-
 const Wrap = styled.div`
-	display: flex;
-	flex-direction: row;
-	width: calc(100vw - 2rem);
-	height: 55svh;
-	align-items: center;
-	margin-inline: 1rem;
-	@media (min-width: 1000px) {
-		margin-inline: 2rem;
-		width: calc(100vw - 4rem);
-	}
-`;
-const WrapRules = styled.div`
 	width: 100%;
+
 	height: 100%;
+	flex-grow: 1;
+
 	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
-	gap: 1rem;
-	@media (min-width: 650px) {
-		width: 50%;
-	}
-	@media (min-width: 1000px) {
-		width: 65%;
-	}
-`;
-const WrapImage = styled.div`
-	height: 100%;
-	width: 35%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-inline: 1rem;
-	gap: 1rem;
-	@media (max-width: 649px) {
+	align-items: start;
+	justify-content: right; // change to center
+
+	padding: 1rem 1rem 1rem 1rem;
+
+	overflow: hidden;
+	#imageWrap {
 		display: none;
+		@media (orientation: landscape) {
+			display: block;
+
+			width: calc(50% - 1rem);
+			height: 100%;
+
+			margin-right: 1rem;
+		}
+		div {
+			display: flex;
+			justify-content: center;
+			align-items: start;
+
+			height: 100%;
+			width: auto;
+			margin-inline: auto;
+
+			img {
+				max-width: 100%;
+				max-height: 100%;
+
+				object-fit: scale-down;
+
+				border-radius: 10px;
+
+				box-shadow: 4px 4px 25px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
+			}
+		}
 	}
-	@media (max-width: 1000px) {
-		width: 50%;
+
+	#rulesWrap {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		@media (orientation: landscape) {
+			width: 50%;
+		}
 	}
 `;
 const App = () => {
@@ -119,15 +118,15 @@ const App = () => {
 				$gameStart={gameStart}
 			/>
 			<Wrap>
-				<WrapImage>
-					<Image>
+				<div id="imageWrap">
+					<div>
 						<img
 							src={`${image}`}
 							alt="jajar"
 						/>
-					</Image>
-				</WrapImage>
-				<WrapRules>
+					</div>
+				</div>
+				<div id="rulesWrap">
 					<DescriptionMode
 						mode={mode}
 						$gameStart={gameStart}
@@ -147,8 +146,15 @@ const App = () => {
 							mode={mode}
 						/>
 					)}
-				</WrapRules>
+				</div>
 			</Wrap>
+
+			{!gameStart && (
+				<StartGame
+					gameStart={handlerGameStart}
+					ranking={handlerRanking}
+				/>
+			)}
 
 			{gameStart && !loading && (
 				<Timer
@@ -156,12 +162,7 @@ const App = () => {
 					gameoverState={gameOver}
 				/>
 			)}
-			{!gameStart && (
-				<StartGame
-					gameStart={handlerGameStart}
-					ranking={handlerRanking}
-				/>
-			)}
+
 			{gameOver && (
 				<GameOverMessage
 					points={points}

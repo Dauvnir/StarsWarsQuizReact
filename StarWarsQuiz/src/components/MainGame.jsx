@@ -4,35 +4,51 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useRetriveApiData from "../hooks/useRetriveApiData";
 const Wrap = styled.div`
-	height: 85%;
+	max-height: 80%;
 	width: 100%;
-	overflow: visible;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	flex-grow: 1;
+
+	overflow: hidden;
+
+	gap: 1rem;
 `;
 const Question = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-	gap: 1rem;
-	width: 100%;
-	height: 12.5rem;
-	margin-top: 1rem;
-	@media (min-width: 650px) {
-		height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	height: 100%;
+	width: 50%;
+	@media (orientation: landscape) {
+		width: 100%;
 	}
+
+	gap: 0.5rem;
 `;
 const Button = styled.button`
 	width: 100%;
-	height: 100%;
-	justify-self: center;
-	align-self: center;
+	max-width: 15rem;
+	height: calc(25% - 1rem);
+	@media (orientation: landscape) and (min-width: 1024px) {
+		height: calc(45% - 1rem);
+	}
+
+	margin-inline: auto;
+
 	cursor: pointer;
 	border: none;
 	border-radius: 10px;
+
 	color: black;
-	font-size: 1.25rem;
-	@media (min-width: 650px) {
-		height: 60%;
-	}
+	font-size: clamp(0.75rem, 0.75rem + 1vw, 2.5rem);
+
 	background-color: ${({ $isCorrect, $isClicked }) =>
 		$isClicked ? ($isCorrect ? "#41ED25" : "#FF0000") : "white"};
 	box-shadow: ${({ $isCorrect, $isClicked }) =>
@@ -45,19 +61,23 @@ const Button = styled.button`
 `;
 
 const Image = styled.div`
-	height: 60%;
+	height: 100%;
+	width: 50%;
+
 	display: flex;
 	justify-content: center;
-	margin-inline: auto;
+	align-items: center;
+	@media (orientation: landscape) {
+		display: none;
+	}
 	img {
-		width: auto;
+		max-width: 100%;
 		max-height: 100%;
-		object-fit: contain;
+
+		object-fit: scale-down;
+
 		box-shadow: 4px 4px 40px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
 		border-radius: 10px;
-	}
-	@media (min-width: 650px) {
-		display: none;
 	}
 `;
 function shuffleArray(array) {
@@ -107,7 +127,7 @@ const MainGame = ({
 				setLoading(true);
 				const response = await data();
 				setCorrectAnswers(response);
-				console.log(response);
+				// console.log(response);
 			} catch (error) {
 				console.error("Error while fetching data from custom hook", error);
 			} finally {
@@ -143,7 +163,7 @@ const MainGame = ({
 
 			const arrayIndex = Array.from(index);
 
-			console.log(arrayIndex);
+			// console.log(arrayIndex);
 
 			arrayIndex.forEach((index) => {
 				const element = correctAnswers[index];
@@ -155,7 +175,7 @@ const MainGame = ({
 			const shuffledArray = shuffleArray(Array.from(questions));
 
 			setFourQuestions(shuffledArray);
-			console.log(shuffledArray);
+			// console.log(shuffledArray);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [nextQuestion, correctAnswers]);
@@ -180,7 +200,10 @@ const MainGame = ({
 			) : (
 				<Wrap>
 					<Image>
-						<img src={`/modes/${modeToLowerCase}/${image}.jpg`} alt="image" />
+						<img
+							src={`/modes/${modeToLowerCase}/${image}.jpg`}
+							alt="image"
+						/>
 					</Image>
 					<Question>
 						{fourQuestions.length > 0 &&
@@ -192,7 +215,8 @@ const MainGame = ({
 										question === correctAnswers[nextQuestion].name
 									}
 									$isClicked={clickedButton === i}
-									onClick={() => handlerNextQuestion(question, i)}>
+									onClick={() => handlerNextQuestion(question, i)}
+								>
 									{question}
 								</Button>
 							))}

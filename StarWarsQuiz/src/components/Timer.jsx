@@ -11,58 +11,72 @@ const saberAnimation = keyframes`
 		width: 0%;
 	}
 `;
-const SaberWrap = styled.div`
-	width: 100%;
-	height: 5rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: row;
-	margin-top: 1rem;
-`;
 
 const Wrap = styled.div`
-	height: 15svh;
+	height: auto;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+
 	margin-inline: 2rem;
-	margin-top: 2rem;
+
+	#saber {
+		width: 100%;
+		height: auto;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+
+		#handle {
+			height: 3rem;
+
+			margin-right: -1rem;
+
+			img {
+				width: 100%;
+				height: 100%;
+
+				object-fit: contain;
+			}
+		}
+		#laser {
+			width: calc(100% - 2rem);
+			height: 1.4rem;
+
+			border-radius: 25px;
+			background-color: grey;
+		}
+	}
+
+	p {
+		color: red;
+		font-size: 1.5rem;
+		font-weight: 600;
+
+		margin: auto;
+
+		text-align: center;
+	}
 `;
-const Handle = styled.div`
-	height: 3rem;
-	margin-right: -1rem;
-`;
-const Saber = styled.div`
-	width: calc(100% - 2rem);
-	height: 1.4rem;
-	border-radius: 25px;
-	background-color: grey;
-`;
+
 const SaberFill = styled.div`
 	height: 100%;
+
 	background-color: white;
 	border-radius: 25px;
+
 	box-shadow: 10px 5px 15px 0px #ff0000, 0px 5px 4px 0px #ff000040 inset,
 		10px -5px 15px 0px #ff0000;
 	transition: width 0.1s linear;
-	/* animation: ${saberAnimation} 60s linear;
+	animation: ${saberAnimation} 60s linear;
 	animation-play-state: ${({ $gameoverState }) =>
-		$gameoverState ? "paused" : "running"}; */
+		$gameoverState ? "paused" : "running"};
 `;
-const Img = styled.img`
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-`;
-const Countdown = styled.p`
-	color: red;
-	font-size: 2rem;
-	font-weight: 600;
-	margin: auto;
-	text-align: center;
-`;
+
 // eslint-disable-next-line react/prop-types
 const Timer = ({ gameover, gameoverState }) => {
 	const [time, setTime] = useState(60); // 60 seconds
@@ -96,18 +110,18 @@ const Timer = ({ gameover, gameoverState }) => {
 
 	return (
 		<Wrap>
-			<SaberWrap>
-				<Handle>
-					<Img src={SaberHandle} />
-				</Handle>
-				<Saber>
+			<div id="saber">
+				<div id="handle">
+					<img src={SaberHandle} />
+				</div>
+				<div id="laser">
 					<SaberFill
 						$gameoverState={gameoverState}
 						style={{ width: `${width}%` }}
 					/>
-				</Saber>
-			</SaberWrap>
-			<Countdown>{formatTime(time)}</Countdown>
+				</div>
+			</div>
+			<p>{formatTime(time)}</p>
 		</Wrap>
 	);
 };

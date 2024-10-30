@@ -3,60 +3,63 @@ import styled from "styled-components";
 import StarWarsLogo from "../../public/ui/StarWarsLogo.png";
 import { useState } from "react";
 const Wrap = styled.div`
-	height: 30vh;
-	margin: 1rem;
+	height: 13rem;
+	width: 100%;
+	padding: 1rem 1rem 0 1rem;
+
 	display: flex;
 	align-items: center;
+	justify-content: center;
+
 	flex-direction: column;
-	@media (min-width: 650px) {
+	@media (orientation: landscape) {
 		flex-direction: row;
-		height: 18vh;
 	}
-	@media (min-width: 1000px) {
-		margin-inline: 2rem;
-		height: 25vh;
-	}
-`;
+	#logoWrap {
+		height: 70%;
+		width: 100%;
+		@media (orientation: landscape) {
+			height: 100%;
+		}
+		img {
+			width: 100%;
+			height: 100%;
 
-const Logo = styled.div`
-	height: 70%;
-	width: 100%;
-	@media (min-width: 650px) {
-		height: 100%;
-		width: 35%;
+			object-fit: contain;
+		}
 	}
-`;
 
-const Image = styled.img`
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-`;
-const Modes = styled.div`
-	height: 30%;
-	width: 100%;
-	border-radius: 10px;
-	box-shadow: 4px 4px 40px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
-	@media (min-width: 650px) {
-		height: 50%;
-		width: 65%;
+	#modes {
+		height: auto;
+		width: 100%;
+
+		border-radius: 10px;
+		box-shadow: 4px 4px 40px 0px #ff0000e5, 0px 4px 4px 0px #00000040;
 	}
 `;
 
 const Button = styled.button`
-	background-color: white;
 	width: calc(100% / 3);
 	height: 100%;
+
+	padding-block: 1rem;
+
+	background-color: white;
 	border: none;
+
 	cursor: pointer;
 	pointer-events: ${({ $gameStart }) => ($gameStart ? "none" : "auto")};
+
 	span {
 		color: black;
-		font-size: 1.4rem;
+
+		font-size: clamp(1rem, 1rem + 1vw, 2rem);
 		font-weight: 500;
-		font-family: Montserrat;
+
 		border-bottom: ${({ $active }) => ($active ? "6px solid red" : "none")};
+
 		position: relative;
+
 		${({ $active }) =>
 			$active &&
 			`
@@ -71,12 +74,6 @@ const Button = styled.button`
             border-radius: inherit;
         }
     `}
-		@media (min-width: 700px) {
-			font-size: 1.9rem;
-		}
-		@media (min-width: 1000px) {
-			font-size: 2.2rem;
-		}
 	}
 `;
 // eslint-disable-next-line no-unused-vars
@@ -89,15 +86,19 @@ const ButtonModes = ({ handlerMode, $gameStart }) => {
 
 	return (
 		<Wrap>
-			<Logo>
-				<Image src={StarWarsLogo} alt="starwars" />
-			</Logo>
-			<Modes>
+			<div id="logoWrap">
+				<img
+					src={StarWarsLogo}
+					alt="starwars"
+				/>
+			</div>
+			<div id="modes">
 				<Button
 					style={{ borderRadius: "10px 0px 0px 10px" }}
 					onClick={() => handler("People")}
 					$active={mode === "People"}
-					$gameStart={$gameStart}>
+					$gameStart={$gameStart}
+				>
 					<span style={{ color: mode === "People" ? "black" : "gray" }}>
 						People
 					</span>
@@ -105,7 +106,8 @@ const ButtonModes = ({ handlerMode, $gameStart }) => {
 				<Button
 					$active={mode === "Vehicles"}
 					onClick={() => handler("Vehicles")}
-					$gameStart={$gameStart}>
+					$gameStart={$gameStart}
+				>
 					<span style={{ color: mode === "Vehicles" ? "black" : "gray" }}>
 						Vehicles
 					</span>
@@ -114,12 +116,13 @@ const ButtonModes = ({ handlerMode, $gameStart }) => {
 					style={{ borderRadius: "0px 10px 10px 0px" }}
 					$active={mode === "Starships"}
 					onClick={() => handler("Starships")}
-					$gameStart={$gameStart}>
+					$gameStart={$gameStart}
+				>
 					<span style={{ color: mode === "Starships" ? "black" : "gray" }}>
 						Starships
 					</span>
 				</Button>
-			</Modes>
+			</div>
 		</Wrap>
 	);
 };

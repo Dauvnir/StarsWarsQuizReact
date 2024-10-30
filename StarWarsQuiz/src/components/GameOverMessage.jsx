@@ -121,7 +121,7 @@ const GameOverMessage = ({ points, mode }) => {
 			mode: mode,
 		};
 		localStorage.setItem(newKey, JSON.stringify(object));
-		console.log(`Nickname: ${newKey}, obj: ${JSON.stringify(object)}`);
+		// console.log(`Nickname: ${newKey}, obj: ${JSON.stringify(object)}`);
 	};
 	return (
 		<Wrap>
